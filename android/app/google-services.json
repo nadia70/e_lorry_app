@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "784973911257",
+    "firebase_url": "https://e-lorry.firebaseio.com",
+    "project_id": "e-lorry",
+    "storage_bucket": "e-lorry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784973911257:android:02225e0af1d6fff96edac8",
+        "android_client_info": {
+          "package_name": "com.nadia.e_lorry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784973911257-4l5ok4u36u5sov7ktkjenoo7heqr6bug.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxMYavVjUIXlalmmZO50dSeHdCOCXnEjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784973911257-4l5ok4u36u5sov7ktkjenoo7heqr6bug.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
