@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_lorry/user/post_trip.dart';
 import 'package:e_lorry/user/truck_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Manager extends StatefulWidget {
@@ -9,6 +10,13 @@ class Manager extends StatefulWidget {
 }
 
 class _ManagerState extends State<Manager> {
+
+  final formKey = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+//We have two private fields here
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +79,7 @@ class _ItemsState extends State<Items> {
 
 
   CollectionReference collectionReference =
-  Firestore.instance.collection("request");
+  Firestore.instance.collection("requisition");
 
   DocumentSnapshot _currentDocument;
 
@@ -101,26 +109,18 @@ class _ItemsState extends State<Items> {
               return ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: snapshot.data.documents.map((doc) {
+                  var doc = snapshot.data.documents[index];
                       return Card(
                         child: ListTile(
                           title: Text(doc.data["Item"]),
                           subtitle: Text(doc.data["Truck"]),
-                          trailing: MaterialButton(
-                            onPressed: (){},
-                            child: Text(doc.data["status"],
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'SFUIDisplay',
-                                fontWeight: FontWeight.bold,
-                              ),
+                          trailing: new Container(
+                            margin: const EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(3.0),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.red[900])
                             ),
-                            color: Colors.white,
-                            textColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
+                            child: Text(doc.data['status'], style: TextStyle(color: Colors.red[900]),),
                           ),
                           onTap: () async {
                             setState(() {
@@ -129,6 +129,7 @@ class _ItemsState extends State<Items> {
 
                             Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new Approval(
 
+                              itemID: doc.documentID,
                               itemName: doc.data["Item"],
                               itemQuantity: doc.data["Quantity"],
                               itemNumber: doc.data["Truck"],
@@ -148,9 +149,6 @@ class _ItemsState extends State<Items> {
                         ),
                       );
 
-                    }).toList(),
-                  );
-
                 },
               );
 
@@ -164,6 +162,7 @@ class _ItemsState extends State<Items> {
 
 class Approval extends StatefulWidget {
 
+  String itemID;
   String itemName;
   String itemQuantity;
   String itemNumber;
@@ -179,6 +178,7 @@ class Approval extends StatefulWidget {
 
   Approval({
 
+    this.itemID,
     this.itemName,
     this.itemQuantity,
     this.itemNumber,
@@ -199,6 +199,78 @@ class Approval extends StatefulWidget {
 }
 
 class _ApprovalState extends State<Approval> {
+
+  final formKey = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  String _comment;
+
+  void _approveCommand() {
+    //get state of our Form
+    final form = formKey.currentState;
+      form.save();
+      _updateStatus();
+      _sendApproval();
+
+  }
+
+  _updateStatus() async {
+    await Firestore.instance
+        .collection('requisition')
+        .document(widget.itemID)
+        .updateData({
+      'status': "Approved",
+      'comment': "Approved"
+        });
+  }
+
+  void _sendApproval() {
+    final form = formKey.currentState;
+    form.reset();
+    Navigator.of(context).push(new CupertinoPageRoute(
+        builder: (BuildContext context) => new Manager()
+    ));
+  }
+
+  void _submitCommand() {
+    //get state of our Form
+    final form = formKey.currentState;
+
+    if (form.validate()) {
+      form.save();
+      _updateComment();
+      _updateData();
+      _showRequest();
+
+    }
+  }
+
+  _updateData() async {
+    await Firestore.instance
+        .collection('requisition')
+        .document(widget.itemID)
+        .updateData({'status': "Manager Comment"});
+  }
+
+  _updateComment() async {
+    await Firestore.instance
+        .collection('requisition')
+        .document(widget.itemID)
+        .updateData({'comment': _comment});
+  }
+
+
+
+  void _showRequest() {
+    _updateData();
+    // flutter defined function
+    final form = formKey.currentState;
+    form.reset();
+    Navigator.of(context).push(new CupertinoPageRoute(
+        builder: (BuildContext context) => new Manager()
+    ));
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -226,7 +298,7 @@ class _ApprovalState extends State<Approval> {
             child: new Column(
               children: <Widget>[
                 new SizedBox(
-                  height: 50.0,
+                  height: 20.0,
                 ),
                 new Card(
                   child: new Container(
@@ -244,20 +316,6 @@ class _ApprovalState extends State<Approval> {
                                 fontSize: 18.0, fontWeight: FontWeight.w700),
                           ),
                         ),
-                        new SizedBox(
-                          height: 5.0,
-                        ),
-
-                      ],
-                    ),
-                  ),
-                ),
-                new Card(
-                  child: new Container(
-                    margin: new EdgeInsets.only(left: 20.0, right: 20.0),
-                    child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
                         new SizedBox(
                           height: 5.0,
                         ),
@@ -556,26 +614,136 @@ class _ApprovalState extends State<Approval> {
                           height: 10.0,
                         ),
 
-                        new MaterialButton(
-                          onPressed: (){},
-                          child: Text(widget.status,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'SFUIDisplay',
-                              fontWeight: FontWeight.bold,
-                            ),
+                        new Container(
+                          margin: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(3.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.red[900])
                           ),
-                          color: Colors.white,
-                          textColor: Colors.red,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)
-                          ),
+                          child: Text(widget.status, style: TextStyle(color: Colors.red[900]),),
                         ),
 
 
                       ],
                     ),
                   ),
+                ),
+
+                new SizedBox(
+                  height: 10.0,
+                ),
+                widget.status != "Approved"?
+                new Card(
+                  child: new Container(
+                    margin: new EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: new Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        new SizedBox(
+                          height: 5.0,
+                        ),
+                        Form(
+                          key: formKey,
+                          child: Column(
+                            children: <Widget>[
+
+                              new SizedBox(
+                                height: 10.0,
+                              ),
+                              new Text("comment",
+                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),),
+
+                              new SizedBox(
+                                height: 10.0,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                child: Container(
+                                  child: TextFormField(
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'SFUIDisplay'
+                                    ),
+                                    decoration: InputDecoration(
+
+                                        errorStyle: TextStyle(color: Colors.red),
+                                        filled: true,
+                                        fillColor: Colors.white.withOpacity(0.1),
+                                        labelText: 'Comment',
+                                        labelStyle: TextStyle(
+                                            fontSize: 11
+                                        )
+                                    ),
+                                    validator: (val) =>
+                                    val.isEmpty  ? 'Required' : null,
+                                    onSaved: (val) => _comment = val,
+                                  ),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              new Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  new SizedBox(
+                                    width: 5.0,
+                                  ),
+                                  MaterialButton(
+                                    onPressed: _submitCommand,
+                                    child: Text('comment',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontFamily: 'SFUIDisplay',
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    color: Colors.white,
+                                    elevation: 16.0,
+                                    height: 50,
+                                    textColor: Colors.red,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20)
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              MaterialButton(
+                                onPressed: _approveCommand,
+                                child: Text('Approve',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: 'SFUIDisplay',
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                color: Colors.white,
+                                elevation: 16.0,
+                                height: 50,
+                                textColor: Colors.red,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        new SizedBox(
+                          height: 5.0,
+                        ),
+
+                      ],
+                    ),
+                  ),
+                ): new Offstage(),
+                new SizedBox(
+                  height: 5.0,
                 ),
 
               ],

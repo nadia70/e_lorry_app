@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'material_request.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 
 class ServiceForm extends StatefulWidget {
@@ -80,6 +81,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  var mask = new MaskTextInputFormatter(mask: '##/##/####', filter: { "#": RegExp(r'[0-9]') });
 
   @override
 
@@ -328,45 +330,21 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
           key: formKey,
           child: Column(
             children: <Widget>[
+              new SizedBox(
+                height: 10.0,
+              ),
+              new Text("ENGINE",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),),
+
+              new SizedBox(
+                height: 10.0,
+              ),
               new Card(
                 child: Stack(
                   children: <Widget>[
+
                     Column(
                       children: <Widget>[
-                        new SizedBox(
-                          height: 10.0,
-                        ),
-                        new Text("ENGINE",
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),),
-
-                        new SizedBox(
-                          height: 10.0,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                          child: Container(
-                            child: TextFormField(
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: 'SFUIDisplay'
-                              ),
-                              decoration: InputDecoration(
-                                  hintText: "01/01/2001",
-                                  errorStyle: TextStyle(color: Colors.red),
-                                  filled: true,
-                                  fillColor: Colors.white.withOpacity(0.1),
-                                  labelText: 'Date',
-                                  labelStyle: TextStyle(
-                                      fontSize: 11
-                                  )
-                              ),
-                              validator: (val) =>
-                              val.isEmpty  ? 'Required' : null,
-                              onSaved: (val) => _date = val,
-                            ),
-                          ),
-                        ),
-
                         DropDownFormField(
                           titleText: 'Gasket',
                           hintText: 'Pass/Fail',
@@ -578,6 +556,34 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
               ),
 
 
+
+
+
+              Padding(
+                padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                child: Container(
+                  child: TextFormField(
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'SFUIDisplay'
+                    ),
+                    decoration: InputDecoration(
+                        hintText: "mm/dd/yyyy",
+                        errorStyle: TextStyle(color: Colors.red),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.1),
+                        labelText: 'Date',
+                        labelStyle: TextStyle(
+                            fontSize: 11
+                        )
+                    ),
+                    inputFormatters: [mask],
+                    validator: (val) =>
+                    val.isEmpty  ? 'Required' : null,
+                    onSaved: (val) => _date = val,
+                  ),
+                ),
+              ),
               new SizedBox(
                 height: 10.0,
               ),
@@ -627,7 +633,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                                 fontFamily: 'SFUIDisplay'
                             ),
                             decoration: InputDecoration(
-                                hintText: "01/01/2001",
+                                hintText: "mm/dd/yyyy",
                                 errorStyle: TextStyle(color: Colors.red),
                                 filled: true,
                                 fillColor: Colors.white.withOpacity(0.1),
@@ -636,6 +642,8 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                                     fontSize: 11
                                 )
                             ),
+                            inputFormatters: [mask],
+                            keyboardType: TextInputType.datetime,
                             validator: (val) =>
                             val.isEmpty  ? 'Enter a valid date' : null,
                             onSaved: (val) => _inspection = val,
@@ -651,7 +659,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                                 fontFamily: 'SFUIDisplay'
                             ),
                             decoration: InputDecoration(
-                                hintText: "01/01/2001",
+                                hintText: "mm/dd/yyyy",
                                 errorStyle: TextStyle(color: Colors.red),
                                 filled: true,
                                 fillColor: Colors.white.withOpacity(0.1),
@@ -660,6 +668,8 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                                     fontSize: 11
                                 )
                             ),
+                            inputFormatters: [mask],
+                            keyboardType: TextInputType.datetime,
                             validator: (val) =>
                             val.isEmpty  ? 'Enter a valid value' : null,
                             onSaved: (val) => _insurance = val,
@@ -676,7 +686,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                                 fontFamily: 'SFUIDisplay'
                             ),
                             decoration: InputDecoration(
-                                hintText: "01/01/2001",
+                                hintText: "mm/dd/yyyy",
                                 errorStyle: TextStyle(color: Colors.red),
                                 filled: true,
                                 fillColor: Colors.white.withOpacity(0.1),
@@ -685,6 +695,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                                     fontSize: 11
                                 )
                             ),
+                            inputFormatters: [mask],
                             validator: (val) =>
                             val.isEmpty  ? 'Enter a valid value' : null,
                             onSaved: (val) => _speedgov = val,
@@ -754,7 +765,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                                 errorStyle: TextStyle(color: Colors.red),
                                 filled: true,
                                 fillColor: Colors.white.withOpacity(0.1),
-                                labelText: 'Sparetyre Serial Number',
+                                labelText: 'Spare tyre Serial Number',
                                 labelStyle: TextStyle(
                                     fontSize: 11
                                 )
@@ -799,7 +810,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                                 fontFamily: 'SFUIDisplay'
                             ),
                             decoration: InputDecoration(
-                                hintText: "01/01/2001",
+                                hintText: "mm/dd/yyyy",
                                 errorStyle: TextStyle(color: Colors.red),
                                 filled: true,
                                 fillColor: Colors.white.withOpacity(0.1),
@@ -808,6 +819,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                                     fontSize: 11
                                 )
                             ),
+                            inputFormatters: [mask],
                             validator: (val) =>
                             val.isEmpty  ? 'Enter a valid value' : null,
                             onSaved: (val) => _purchase = val,
@@ -849,7 +861,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                                 fontFamily: 'SFUIDisplay'
                             ),
                             decoration: InputDecoration(
-                                hintText: "01/01/2001",
+                                hintText: "mm/dd/yyyy",
                                 errorStyle: TextStyle(color: Colors.red),
                                 filled: true,
                                 fillColor: Colors.white.withOpacity(0.1),
@@ -988,7 +1000,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                                 fontFamily: 'SFUIDisplay'
                             ),
                             decoration: InputDecoration(
-                                hintText: "01/01/2001",
+                                hintText: "mm/dd/yyyy",
                                 errorStyle: TextStyle(color: Colors.red),
                                 filled: true,
                                 fillColor: Colors.white.withOpacity(0.1),
@@ -997,6 +1009,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                                     fontSize: 11
                                 )
                             ),
+                            inputFormatters: [mask],
                             validator: (val) =>
                             val.isEmpty  ? 'Enter a valid value' : null,
                             onSaved: (val) => _nxt = val,

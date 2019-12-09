@@ -139,8 +139,7 @@ class _PostDatesState extends State<PostDates> {
               return ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: snapshot.data.documents.map((doc) {
+                  var doc = snapshot.data.documents[index];
                       return Card(
                         child: ListTile(
                           title: Text("Date: ${doc.data['date']}"),
@@ -161,8 +160,6 @@ class _PostDatesState extends State<PostDates> {
                           },
                         ),
                       );
-                    }).toList(),
-                  );
 
                 },
               );

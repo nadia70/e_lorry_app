@@ -136,10 +136,9 @@ class _SeviceDatesState extends State<SeviceDates> {
               return ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    child: Column(
-                      children: snapshot.data.documents.map((doc) {
-                        return ListTile(
+                  var doc = snapshot.data.documents[index];
+                      return Card(
+                        child: ListTile(
                           title: Text("Date: ${doc.data['date'].toString()}"),
                           subtitle: Text("Next service: ${doc.data['Next service']}"),
 
@@ -161,10 +160,8 @@ class _SeviceDatesState extends State<SeviceDates> {
 
                             )));
                           },
-                        );
-                      }).toList(),
-                    ),
-                  );
+                        ),
+                      );
 
                 },
               );

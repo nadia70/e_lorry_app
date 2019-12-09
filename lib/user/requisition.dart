@@ -25,7 +25,7 @@ class _RequisitionState extends State<Requisition> {
 
       body: Container(
         child: StreamBuilder<QuerySnapshot>(
-            stream: collectionReference.orderBy("date").snapshots(),
+            stream: collectionReference.snapshots(),
             builder: (context, snapshot){
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -39,26 +39,18 @@ class _RequisitionState extends State<Requisition> {
                 return ListView.builder(
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (context, index) {
-                    return Column(
-                      children: snapshot.data.documents.map((doc) {
+                    var doc = snapshot.data.documents[index];
                         return Card(
                           child: ListTile(
                             title: Text(doc.data["Item"]),
                             subtitle: Text(doc.data["Truck"]),
-                            trailing: MaterialButton(
-                              onPressed: (){},
-                              child: Text(doc.data["status"],
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'SFUIDisplay',
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            trailing: new Container(
+                              margin: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(3.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.red[900])
                               ),
-                              color: Colors.white,
-                              textColor: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                              ),
+                              child: Text(doc.data['status'], style: TextStyle(color: Colors.red[900]),),
                             ),
                             onTap: () async {
                               setState(() {
@@ -78,15 +70,13 @@ class _RequisitionState extends State<Requisition> {
                                 reqBrand: doc.data["brand"],
                                 reqPrice: doc.data["price"],
                                 reqSupplier: doc.data["supplier"],
+                                reqComment: doc.data["comment"],
 
 
                               )));
                             },
                           ),
                         );
-
-                      }).toList(),
-                    );
 
                   },
                 );
@@ -102,6 +92,7 @@ class _RequisitionState extends State<Requisition> {
 
 class RequisitionDetail extends StatefulWidget {
 
+  String reqComment;
   String itemName;
   String itemQuantity;
   String itemNumber;
@@ -116,6 +107,7 @@ class RequisitionDetail extends StatefulWidget {
 
   RequisitionDetail({
 
+    this.reqComment,
     this.itemName,
     this.itemQuantity,
     this.itemNumber,
@@ -489,9 +481,6 @@ class _RequisitionDetailState extends State<RequisitionDetail> {
                         ),
 
 
-
-
-
                         new SizedBox(
                           height: 10.0,
                         ),
@@ -501,6 +490,29 @@ class _RequisitionDetailState extends State<RequisitionDetail> {
                     ),
                   ),
                 ),
+
+                new SizedBox(
+                  height: 10.0,
+                ),
+
+                new Card(
+                  child: new Container(
+                    margin: new EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: new Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        new SizedBox(
+                          height: 10.0,
+                        ),
+                        new Text("Comment", style: TextStyle(fontSize: 12 , color: Colors.grey),),
+                        new SizedBox(
+                          height: 10.0,
+                        ),
+                        new Text(widget.reqComment, style: TextStyle(fontSize: 15, color: Colors.grey)),
+                      ],
+                    ),
+                  ),
+                )
 
               ],
             ),

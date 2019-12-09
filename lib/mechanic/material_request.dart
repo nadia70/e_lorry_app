@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class matRequest extends StatefulWidget {
 
@@ -25,7 +26,7 @@ String _quantity;
 String _name;
 String _truck;
 
-
+var mask = new MaskTextInputFormatter(mask: '##/##/####', filter: { "#": RegExp(r'[0-9]') });
 
 void _submitCommand() {
   //get state of our Form

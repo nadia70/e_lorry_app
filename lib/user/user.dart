@@ -4,6 +4,7 @@ import 'package:e_lorry/user/post_trip.dart';
 import 'package:e_lorry/user/requisition.dart';
 import 'package:e_lorry/user/truck_service.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class User extends StatefulWidget {
   @override
@@ -106,7 +107,8 @@ class _ItemsState extends State<Items> {
   Widget build(BuildContext context) {
     return Container(
       child: StreamBuilder<QuerySnapshot>(
-          stream: collectionReference.snapshots(),
+          stream: collectionReference.where("status", isEqualTo:
+          "pending").snapshots(),
           builder: (context, snapshot){
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -119,26 +121,18 @@ class _ItemsState extends State<Items> {
               return ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: snapshot.data.documents.map((doc) {
+                  var doc = snapshot.data.documents[index];
                       return Card(
                         child: ListTile(
                           title: Text(doc.data['Item']),
                           subtitle: Text(doc.data['Truck']),
-                          trailing: MaterialButton(
-                            onPressed: (){},
-                            child: Text(doc.data["status"],
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'SFUIDisplay',
-                                fontWeight: FontWeight.bold,
-                              ),
+                          trailing: new Container(
+                            margin: const EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(3.0),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.red[900])
                             ),
-                            color: Colors.white,
-                            textColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)
-                            ),
+                            child: Text(doc.data['status'], style: TextStyle(color: Colors.red[900]),),
                           ),
                           onTap: () async {
                             setState(() {
@@ -158,8 +152,6 @@ class _ItemsState extends State<Items> {
                           },
                         ),
                       );
-                    }).toList(),
-                  );
 
                 },
               );
@@ -207,7 +199,7 @@ class _RequestsState extends State<Requests> {
   String _price;
   String _supplier;
 
-
+  var mask = new MaskTextInputFormatter(mask: '##/##/####', filter: { "#": RegExp(r'[0-9]') });
 
   void _submitCommand() {
     //get state of our Form
@@ -418,7 +410,7 @@ class _RequestsState extends State<Requests> {
                               fontFamily: 'SFUIDisplay'
                           ),
                           decoration: InputDecoration(
-                              hintText: "01/01/2001",
+                              hintText: "mm/dd/yyyy",
                               errorStyle: TextStyle(color: Colors.red),
                               filled: true,
                               fillColor: Colors.white.withOpacity(0.1),
@@ -427,6 +419,7 @@ class _RequestsState extends State<Requests> {
                                   fontSize: 11
                               )
                           ),
+                          inputFormatters: [mask],
                           validator: (val) =>
                           val.isEmpty  ? 'Required' : null,
                           onSaved: (val) => _date = val,
