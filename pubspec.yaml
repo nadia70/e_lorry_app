@@ -32,7 +32,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_native_splash: ^0.1.9
 
 
 
@@ -76,7 +75,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-
-flutter_native_splash:
-  image: assets/logo.png
-  color: "#42a5f5"
