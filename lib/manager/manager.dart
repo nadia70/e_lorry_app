@@ -3,6 +3,7 @@ import 'package:e_lorry/user/post_trip.dart';
 import 'package:e_lorry/user/truck_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:e_lorry/login.dart';
 
 class Manager extends StatefulWidget {
   @override
@@ -27,9 +28,12 @@ class _ManagerState extends State<Manager> {
         child: new Column(
           children: <Widget>[
             new UserAccountsDrawerHeader(
-              accountEmail: Text(""),
+              accountEmail: Text("Manager"),
               currentAccountPicture: new CircleAvatar(backgroundColor: Colors.white,
-              )
+                child: new Icon(Icons.person,
+                  color: Colors.green,
+                  size: 20.0,
+                ),)
               ,),
 
             new Divider(),
@@ -57,6 +61,20 @@ class _ManagerState extends State<Manager> {
               title: new Text("Post Trip"),
               onTap: (){
                 Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new Post()));
+              },
+            ),
+
+            new Divider(),
+            new ListTile(
+              trailing: new CircleAvatar(
+                child: new Icon(Icons.subdirectory_arrow_left,
+                  color: Colors.white,
+                  size: 20.0,
+                ),
+              ),
+              title: new Text("Logout"),
+              onTap: (){
+                Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new LoginScreen()));
               },
             ),
 

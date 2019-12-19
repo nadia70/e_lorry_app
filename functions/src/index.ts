@@ -31,3 +31,4 @@ export const sendToManager = functions.firestore
 
     return fcm.sendToTopic('manager', message);
   });
+

@@ -37,7 +37,7 @@ class _MechState extends State<Mech> {
                       );
                     }if (snapshot.data == null){
                       return Center(
-                          child: Text("The are no pending requests"),);
+                          child: Text("The are no saved trucks"),);
                     }else{
                       return ListView.builder(
                         itemCount: snapshot.data.length,

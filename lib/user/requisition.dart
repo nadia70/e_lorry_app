@@ -71,6 +71,7 @@ class _RequisitionState extends State<Requisition> {
                                 reqPrice: doc.data["price"],
                                 reqSupplier: doc.data["supplier"],
                                 reqComment: doc.data["comment"],
+                                reqStatus: doc.data["status"],
 
 
                               )));
@@ -104,9 +105,11 @@ class RequisitionDetail extends StatefulWidget {
   String reqBrand;
   String reqPrice;
   String reqSupplier;
+  String reqStatus;
 
   RequisitionDetail({
 
+    this.reqStatus,
     this.reqComment,
     this.itemName,
     this.itemQuantity,
@@ -495,6 +498,7 @@ class _RequisitionDetailState extends State<RequisitionDetail> {
                   height: 10.0,
                 ),
 
+                widget.reqStatus != "Manager Comment"?
                 new Card(
                   child: new Container(
                     margin: new EdgeInsets.only(left: 20.0, right: 20.0),
@@ -509,10 +513,31 @@ class _RequisitionDetailState extends State<RequisitionDetail> {
                           height: 10.0,
                         ),
                         new Text(widget.reqComment, style: TextStyle(fontSize: 15, color: Colors.grey)),
+
+                        new SizedBox(
+                          height: 10.0,
+                        ),
+
+                        MaterialButton(
+                          child: Text('comment',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'SFUIDisplay',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          color: Colors.white,
+                          elevation: 16.0,
+                          height: 50,
+                          textColor: Colors.red,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)
+                          ), onPressed: () {},
+                        ),
                       ],
                     ),
                   ),
-                )
+                ): new Offstage(),
 
               ],
             ),
