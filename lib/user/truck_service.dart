@@ -156,6 +156,19 @@ class _SeviceDatesState extends State<SeviceDates> {
                               frontTyre: doc.data["Front tyre serial number"],
                               spareTyre: doc.data["Spare tyre serial number"],
                               batWarranty: doc.data["Battery warranty"],
+                              datePurchased: doc.data["Battery warranty"],
+                              batterySerial: doc.data["Battery warranty"],
+                              dateGiven: doc.data["Battery warranty"],
+                              firstTank: doc.data["Battery warranty"],
+                              secondTank: doc.data["Battery warranty"],
+                              totalLitres: doc.data["Battery warranty"],
+                              averageKm: doc.data["Battery warranty"],
+                              currentKm: doc.data["Battery warranty"],
+                              nxtService: doc.data["Battery warranty"],
+                              kmOil: doc.data["Battery warranty"],
+                              greasefrontwheel: doc.data["Battery warranty"],
+                              date: doc.data["Battery warranty"],
+                              Mechanic: doc.data["Battery warranty"],
 
 
                             )));
@@ -180,11 +193,24 @@ class FormDetails extends StatefulWidget {
   String driverNumber;
   String truckExpiry;
   String truckInsurance;
-  String  speedGov;
-  String  backTyre;
-  String  frontTyre;
-  String  spareTyre;
-  String  batWarranty;
+  String speedGov;
+  String backTyre;
+  String frontTyre;
+  String spareTyre;
+  String batWarranty;
+  String datePurchased;
+  String batterySerial;
+  String dateGiven;
+  String firstTank;
+  String secondTank;
+  String totalLitres;
+  String averageKm;
+  String currentKm;
+  String nxtService;
+  String kmOil;
+  String greasefrontwheel;
+  String date;
+  String Mechanic;
 
   FormDetails({
 
@@ -198,6 +224,19 @@ class FormDetails extends StatefulWidget {
     this.frontTyre,
     this.spareTyre,
     this.batWarranty,
+    this.datePurchased,
+    this.batterySerial,
+    this.dateGiven,
+    this.firstTank,
+    this.secondTank,
+    this.totalLitres,
+    this.averageKm,
+    this.currentKm,
+    this.nxtService,
+    this.date,
+    this.Mechanic,
+    this.kmOil,
+    this.greasefrontwheel,
 
   });
 

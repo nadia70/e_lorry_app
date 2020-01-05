@@ -57,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ));
     }
     if(_email == "mechanic" && _password == "6789" ) {
+      _messaging.subscribeToTopic('mech');
       Navigator.of(context).push(new CupertinoPageRoute(
           builder: (BuildContext context) => new Mech()
       ));

@@ -39,20 +39,6 @@ class _ManagerState extends State<Manager> {
             new Divider(),
             new ListTile(
               trailing: new CircleAvatar(
-                child: new Icon(Icons.settings,
-                  color: Colors.white,
-                  size: 20.0,
-                ),
-              ),
-              title: new Text("Service"),
-              onTap: (){
-                Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new truckService()));
-              },
-            ),
-
-            new Divider(),
-            new ListTile(
-              trailing: new CircleAvatar(
                 child: new Icon(Icons.directions_car,
                   color: Colors.white,
                   size: 20.0,
@@ -65,6 +51,21 @@ class _ManagerState extends State<Manager> {
             ),
 
             new Divider(),
+            new ListTile(
+              trailing: new CircleAvatar(
+                child: new Icon(Icons.settings,
+                  color: Colors.white,
+                  size: 20.0,
+                ),
+              ),
+              title: new Text("Service"),
+              onTap: (){
+                Navigator.of(context).push(new MaterialPageRoute(builder: (context)=> new truckService()));
+              },
+            ),
+
+            new Divider(),
+
             new ListTile(
               trailing: new CircleAvatar(
                 child: new Icon(Icons.subdirectory_arrow_left,

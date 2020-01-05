@@ -216,7 +216,6 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
         "Current kilometres": _current,
         "Next service": _nxt,
         "Km when Oil, Gearbox, and Diff oil changed": _oil,
-        "Spare tyre serial number": _sptyre,
         "Grease frontwheel": _grease,
         "timestamp" : DateTime.now(),
         "date":_date2,
