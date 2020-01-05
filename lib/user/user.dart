@@ -248,6 +248,7 @@ class _RequestsState extends State<Requests> {
         "brand" : _brand,
         "price" : _price,
         "supplier" : _supplier,
+        "reqDate" : _date,
         "status" : "pending",
       });
     }).then((result) =>

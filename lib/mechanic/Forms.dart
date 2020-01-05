@@ -140,6 +140,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
   String _fire;
   String _date;
   String _date2;
+  String _comment;
 
 
   final formKey = GlobalKey<FormState>();
@@ -283,6 +284,10 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
       await reference.add({
         "Truck": widget.truckNumber,
         "date": _date,
+        "Insurance Expiry": _insu,
+        "Inspection": _insp,
+        "Greasing at KM": _greasing,
+        "Comment": _comment,
         "timestamp" : DateTime.now(),
         "engine" : {
           "Gasket": _gasket,
@@ -348,6 +353,23 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
           "Painting": _painting,
           "Fuel Tank":_fueltank,
           "padlocks":_padLock,
+        },
+        "safety" : {
+          "Life saver": _lifeSaver,
+          "Fire Extinguisher": _fireextinguisher,
+          "First Aid Kit": _faidkit,
+          "Reflector Jacket and helmet":_reflector,
+          "Speed governor":_speedGovernor,
+        },
+        "frontWheels" : {
+          "FrontRight": _frontRight,
+          "FrontLeft": _frontLeft,
+        },
+        "backWheels" : {
+          "BackRight- Right": _backRR,
+          "BackRight- Left": _backRL,
+          "BackLeft- Right": _backLR,
+          "BackLeft -Left":_backLL,
         },
 
       });
@@ -2897,7 +2919,7 @@ class _ServiceFormState extends State<ServiceForm> with SingleTickerProviderStat
                         ),
                         validator: (val) =>
                         val.isEmpty  ? null : null,
-                        onSaved: (val) => _date = val,
+                        onSaved: (val) => _comment = val,
                       ),
                     ),
                   ),

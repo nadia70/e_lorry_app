@@ -69,7 +69,7 @@ class _MechState extends State<Mech> {
                                           fontWeight: FontWeight.w700,
                                           fontSize: 18.0,
                                           color: Colors.red[900]),),
-                                    subtitle: new Text("driver : ${snapshot.data[index].data["driver"]}",
+                                    subtitle: new Text("Driver : ${snapshot.data[index].data["driver"]}",
                                       style: new TextStyle(
                                           fontWeight: FontWeight.w700,
                                           fontSize: 12.0,

@@ -14,6 +14,8 @@ class _PostState extends State<Post> {
 
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +70,7 @@ class _PostState extends State<Post> {
                                             fontWeight: FontWeight.w700,
                                             fontSize: 18.0,
                                             color: Colors.red[900]),),
-                                      subtitle: new Text("driver : ${snapshot.data[index].data["driver"]}",
+                                      subtitle: new Text("Driver : ${snapshot.data[index].data["driver"]}",
                                         style: new TextStyle(
                                             fontWeight: FontWeight.w700,
                                             fontSize: 12.0,
@@ -155,8 +157,27 @@ class _PostDatesState extends State<PostDates> {
                               fanBelt: doc.data["Fan belt and blades"],
                               radiator: doc.data["Radiator"],
                               injectorPump: doc.data["Injector Pump"],
+                              evaluationDate: doc.data["date"],
+                              inspection: doc.data["Inspection"],
+                              insurance: doc.data["Insurance Expiry"],
+                              greasing: doc.data["Greasing at KM"],
+                              comment: doc.data["Comment"],
+                              engine: Map<String, dynamic>.from(doc.data["engine"]),
+                              electronics: Map<String, dynamic>.from(doc.data["electronics"]),
+                              brakes: Map<String, dynamic>.from(doc.data["brakes"]),
+                              frontSusp: Map<String, dynamic>.from(doc.data["front suspension"]),
+                              rearSusp: Map<String, dynamic>.from(doc.data["rear suspension"]),
+                              wheelDetail: Map<String, dynamic>.from(doc.data["wheel details"]),
+                              cabin: Map<String, dynamic>.from(doc.data["cabin"]),
+                              body: Map<String, dynamic>.from(doc.data["body"]),
+                              safety: Map<String, dynamic>.from(doc.data["safety"]),
+                              frontWheels: Map<String, dynamic>.from(doc.data["frontWheels"]),
+                              backWheels: Map<String, dynamic>.from(doc.data["backWheels"]),
+
+
 
                             )));
+
                           },
                         ),
                       );
@@ -173,7 +194,23 @@ class _PostDatesState extends State<PostDates> {
 
 class PostDetails extends StatefulWidget {
 
+  final Map<String,dynamic> engine ;
+  final Map<String,dynamic> electronics;
+  final Map<String,dynamic> brakes;
+  final Map<String,dynamic> frontSusp;
+  final Map<String,dynamic> rearSusp;
+  final Map<String,dynamic> wheelDetail;
+  final Map<String,dynamic> cabin;
+  final Map<String,dynamic> body;
+  final Map<String,dynamic> safety;
+  final Map<String,dynamic> frontWheels;
+  final Map<String,dynamic> backWheels;
   String truckNo;
+  String evaluationDate;
+  String inspection;
+  String insurance;
+  String greasing;
+  String comment;
   String gasket;
   String hosepipe;
   String engineMounts;
@@ -182,9 +219,25 @@ class PostDetails extends StatefulWidget {
   String  injectorPump;
 
 
-  PostDetails({
 
+  PostDetails({
+    this.engine,
+    this.electronics,
+    this.brakes,
+    this.frontSusp,
+    this.rearSusp,
+    this.wheelDetail,
+    this.cabin,
+    this.body,
+    this.safety,
+    this.frontWheels,
+    this.backWheels,
     this.truckNo,
+    this.evaluationDate,
+    this.insurance,
+    this.inspection,
+    this.greasing,
+    this.comment,
     this.gasket,
     this.hosepipe,
     this.engineMounts,
@@ -199,13 +252,16 @@ class PostDetails extends StatefulWidget {
   _PostDetailsState createState() => _PostDetailsState();
 }
 
+
+
 class _PostDetailsState extends State<PostDetails> {
   @override
   Widget build(BuildContext context) {
+    List<Widget> children = new List<Widget>();
     return Scaffold(
       appBar: new AppBar(
         iconTheme: new IconThemeData(color: Colors.white),
-        title: new Text("Item Detail"),
+        title: new Text("Detail"),
         centerTitle: true,
       ),
 
@@ -213,46 +269,456 @@ class _PostDetailsState extends State<PostDetails> {
         alignment: Alignment.topCenter,
         children: <Widget>[
           new Container(
-            height: 200.0,
+            height: 50.0,
             decoration: new BoxDecoration(
               color: Colors.grey.withAlpha(50),
               borderRadius: new BorderRadius.only(
-                bottomRight: new Radius.circular(100.0),
-                bottomLeft: new Radius.circular(100.0),
+                bottomRight: new Radius.circular(20.0),
+                bottomLeft: new Radius.circular(20.0),
               ),
             ),
           ),
+
           new SingleChildScrollView(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(30.0),
             child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                new SizedBox(
-                  height: 50.0,
-                ),
-                new Card(
-                  child: new Container(
-                    margin: new EdgeInsets.only(left: 20.0, right: 20.0),
-                    child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         new SizedBox(
-                          height: 10.0,
+                          width: 5.0,
                         ),
-                        Center(
-                          child: new Text(
-                            "ENGINE",
-                            style: new TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                        new SizedBox(
-                          height: 5.0,
-                        ),
-
+                        new Text(
+                          "Evaluation Date",
+                          style: new TextStyle(color: Colors.black, fontSize: 18.0,),
+                        )
                       ],
                     ),
-                  ),
+                    new Text(
+                      widget.evaluationDate,
+                      style: new TextStyle(
+                          fontSize: 11.0,
+                          color: Colors.indigo,
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ],
                 ),
+                new SizedBox(
+                  height: 10.0,
+                ),
+                new Card(child: new Container(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize:MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: new Text(
+                          "ENGINE",
+                          style: new TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      widget.engine == null ? Container() :
+                      new Flexible(
+                    child: new ListView.builder(
+                      shrinkWrap: true,
+                    itemCount: widget.engine.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      String key = widget.engine.keys.elementAt(index);
+                      return new Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          new ListTile(
+                            title: new Text("$key"),
+                            subtitle: new Text("${widget.engine[key]}"),
+                          ),
+                          new Divider(
+                            height: 2.0,
+                          ),
+                        ],
+                      );
+                    },
+                ),
+                  ),
+                    ],
+                  ),
+                ),),
+                new Card(child: new Container(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize:MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: new Text(
+                          "ELECTRONICS",
+                          style: new TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      widget.electronics == null ? Container() :
+                      new Flexible(
+                        child: new ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.electronics.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            String key = widget.electronics.keys.elementAt(index);
+                            return new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new ListTile(
+                                  title: new Text("$key"),
+                                  subtitle: new Text("${widget.electronics[key]}"),
+                                ),
+                                new Divider(
+                                  height: 2.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),),
+                new Card(child: new Container(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize:MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: new Text(
+                          "BRAKES",
+                          style: new TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      widget.brakes == null ? Container() :
+                      new Flexible(
+                        child: new ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.brakes.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            String key = widget.brakes.keys.elementAt(index);
+                            return new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new ListTile(
+                                  title: new Text("$key"),
+                                  subtitle: new Text("${widget.brakes[key]}"),
+                                ),
+                                new Divider(
+                                  height: 2.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),),
+                new Card(child: new Container(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize:MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: new Text(
+                          "FRONT SUSPENSION",
+                          style: new TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      widget.frontSusp == null ? Container() :
+                      new Flexible(
+                        child: new ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.frontSusp.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            String key = widget.frontSusp.keys.elementAt(index);
+                            return new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new ListTile(
+                                  title: new Text("$key"),
+                                  subtitle: new Text("${widget.frontSusp[key]}"),
+                                ),
+                                new Divider(
+                                  height: 2.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),),
+                new Card(child: new Container(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize:MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: new Text(
+                          "REAR SUSPENSION",
+                          style: new TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      widget.rearSusp == null ? Container() :
+                      new Flexible(
+                        child: new ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.rearSusp.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            String key = widget.rearSusp.keys.elementAt(index);
+                            return new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new ListTile(
+                                  title: new Text("$key"),
+                                  subtitle: new Text("${widget.rearSusp[key]}"),
+                                ),
+                                new Divider(
+                                  height: 2.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),),
+                new Card(child: new Container(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize:MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: new Text(
+                          "WHEEL DETAIL",
+                          style: new TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      widget.wheelDetail == null ? Container() :
+                      new Flexible(
+                        child: new ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.wheelDetail.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            String key = widget.wheelDetail.keys.elementAt(index);
+                            return new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new ListTile(
+                                  title: new Text("$key"),
+                                  subtitle: new Text("${widget.wheelDetail[key]}"),
+                                ),
+                                new Divider(
+                                  height: 2.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),),
+                new Card(child: new Container(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize:MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: new Text(
+                          "CABIN",
+                          style: new TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      widget.cabin == null ? Container() :
+                      new Flexible(
+                        child: new ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.cabin.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            String key = widget.cabin.keys.elementAt(index);
+                            return new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new ListTile(
+                                  title: new Text("$key"),
+                                  subtitle: new Text("${widget.cabin[key]}"),
+                                ),
+                                new Divider(
+                                  height: 2.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),),
+                new Card(child: new Container(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize:MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: new Text(
+                          "BODY",
+                          style: new TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      widget.body == null ? Container() :
+                      new Flexible(
+                        child: new ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.body.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            String key = widget.body.keys.elementAt(index);
+                            return new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new ListTile(
+                                  title: new Text("$key"),
+                                  subtitle: new Text("${widget.body[key]}"),
+                                ),
+                                new Divider(
+                                  height: 2.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),),
+                new Card(child: new Container(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize:MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: new Text(
+                          "SAFETY",
+                          style: new TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      widget.safety == null ? Container() :
+                      new Flexible(
+                        child: new ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.safety.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            String key = widget.safety.keys.elementAt(index);
+                            return new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new ListTile(
+                                  title: new Text("$key"),
+                                  subtitle: new Text("${widget.safety[key]}"),
+                                ),
+                                new Divider(
+                                  height: 2.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),),
+                new Card(child: new Container(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize:MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: new Text(
+                          "FRONT WHEELS",
+                          style: new TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      widget.frontWheels == null ? Container() :
+                      new Flexible(
+                        child: new ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.frontWheels.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            String key = widget.frontWheels.keys.elementAt(index);
+                            return new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new ListTile(
+                                  title: new Text("$key"),
+                                  subtitle: new Text("${widget.frontWheels[key]}"),
+                                ),
+                                new Divider(
+                                  height: 2.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),),
+                new Card(child: new Container(
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize:MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: new Text(
+                          "BACK WHEELS",
+                          style: new TextStyle(
+                              fontSize: 18.0, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      widget.backWheels == null ? Container() :
+                      new Flexible(
+                        child: new ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: widget.backWheels.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            String key = widget.backWheels.keys.elementAt(index);
+                            return new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new ListTile(
+                                  title: new Text("$key"),
+                                  subtitle: new Text("${widget.backWheels[key]}"),
+                                ),
+                                new Divider(
+                                  height: 2.0,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),),
                 new Card(
                   child: new Container(
                     margin: new EdgeInsets.only(left: 20.0, right: 20.0),
@@ -300,13 +766,13 @@ class _PostDetailsState extends State<PostDetails> {
                                   width: 5.0,
                                 ),
                                 new Text(
-                                  "Gasket",
+                                  "Evaluation Date",
                                   style: new TextStyle(color: Colors.black, fontSize: 18.0,),
                                 )
                               ],
                             ),
                             new Text(
-                              widget.gasket,
+                              widget.evaluationDate,
                               style: new TextStyle(
                                   fontSize: 11.0,
                                   color: Colors.indigo,
@@ -330,13 +796,13 @@ class _PostDetailsState extends State<PostDetails> {
                                   width: 5.0,
                                 ),
                                 new Text(
-                                  "Hose pipe",
+                                  "Insurance Expiry",
                                   style: new TextStyle(color: Colors.black, fontSize: 18.0,),
                                 )
                               ],
                             ),
                             new Text(
-                              widget.hosepipe,
+                              widget.insurance,
                               style: new TextStyle(
                                   fontSize: 11.0,
                                   color: Colors.indigo,
@@ -359,13 +825,13 @@ class _PostDetailsState extends State<PostDetails> {
                                   width: 5.0,
                                 ),
                                 new Text(
-                                  "Engine Mounts",
+                                  "Greasing@KM",
                                   style: new TextStyle(color: Colors.black, fontSize: 18.0,),
                                 )
                               ],
                             ),
                             new Text(
-                              widget.engineMounts,
+                              widget.greasing,
                               style: new TextStyle(
                                   fontSize: 11.0,
                                   color: Colors.indigo,
@@ -381,94 +847,6 @@ class _PostDetailsState extends State<PostDetails> {
                         new SizedBox(
                           height: 5.0,
                         ),
-
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            new Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                new SizedBox(
-                                  width: 5.0,
-                                ),
-                                new Text(
-                                  "Fan belt and blades",
-                                  style: new TextStyle(color: Colors.black, fontSize: 18.0,),
-                                )
-                              ],
-                            ),
-                            new Text(
-                              widget.fanBelt,
-                              style: new TextStyle(
-                                  fontSize: 11.0,
-                                  color: Colors.indigo,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                          ],
-                        ),
-
-                        new SizedBox(
-                          height: 5.0,
-                        ),
-
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            new Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                new SizedBox(
-                                  width: 5.0,
-                                ),
-                                new Text(
-                                  "Radiator",
-                                  style: new TextStyle(color: Colors.black, fontSize: 18.0,),
-                                )
-                              ],
-                            ),
-                            new Text(
-                              widget.radiator,
-                              style: new TextStyle(
-                                  fontSize: 11.0,
-                                  color: Colors.indigo,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                          ],
-                        ),
-
-                        new SizedBox(
-                          height: 5.0,
-                        ),
-
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            new Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                new SizedBox(
-                                  width: 5.0,
-                                ),
-                                new Text(
-                                  "Injector Pump",
-                                  style: new TextStyle(color: Colors.black, fontSize: 18.0,),
-                                )
-                              ],
-                            ),
-                            new Text(
-                              widget.injectorPump,
-                              style: new TextStyle(
-                                  fontSize: 11.0,
-                                  color: Colors.indigo,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                          ],
-                        ),
-
-                        new SizedBox(
-                          height: 5.0,
-                        ),
-
 
 
                         new SizedBox(
@@ -489,4 +867,5 @@ class _PostDetailsState extends State<PostDetails> {
     );
   }
 }
+
 

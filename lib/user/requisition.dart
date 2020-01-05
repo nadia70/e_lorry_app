@@ -63,7 +63,7 @@ class _RequisitionState extends State<Requisition> {
                                 itemQuantity: doc.data["Quantity"],
                                 itemNumber: doc.data["Truck"],
                                 reqName: doc.data["Name"],
-                                reqDate: doc.data["date"],
+                                reqDate: doc.data["reqDate"],
                                 reqOne: doc.data["quoteOne"],
                                 reqTwo: doc.data["quoteTwo"],
                                 reqThree: doc.data["quoteThree"],
@@ -280,30 +280,7 @@ class _RequisitionDetailState extends State<RequisitionDetail> {
                           height: 5.0,
                         ),
 
-                        new Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            new Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                new SizedBox(
-                                  width: 5.0,
-                                ),
-                                new Text(
-                                  "Request date",
-                                  style: new TextStyle(color: Colors.black, fontSize: 18.0,),
-                                )
-                              ],
-                            ),
-                            new Text(
-                              widget.reqDate,
-                              style: new TextStyle(
-                                  fontSize: 11.0,
-                                  color: Colors.indigo,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                          ],
-                        ),
+
 
 
 
